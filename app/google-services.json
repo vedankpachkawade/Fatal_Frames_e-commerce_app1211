@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "441002762443",
+    "firebase_url": "https://fatal-frame-e-comm-app-default-rtdb.firebaseio.com",
+    "project_id": "fatal-frame-e-comm-app",
+    "storage_bucket": "fatal-frame-e-comm-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441002762443:android:5ec5c34740b929a16f3b4e",
+        "android_client_info": {
+          "package_name": "com.example.fatalframes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "441002762443-viudcb50kuujlmpsta21t94pqtll54p6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fatalframes",
+            "certificate_hash": "66125d7a4451d68901883e3fe0734ee1680cf379"
+          }
+        },
+        {
+          "client_id": "441002762443-cmimdue6u540dliig1tnvr43hukol2vq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxDhjrqbrCpLe-z93hWGGQeCWfHVvUyG0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "441002762443-cmimdue6u540dliig1tnvr43hukol2vq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
