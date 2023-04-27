@@ -6,7 +6,6 @@ public class Users {
     public Users(String name, String phone, String mailid, String password) {
         this.name = name;
         this.phone = phone;
-        this.mailid = mailid;
         this.password = password;
     }
 
@@ -26,14 +25,6 @@ public class Users {
         this.phone = phone;
     }
 
-    public String getMailid() {
-        return mailid;
-    }
-
-    public void setMailid(String mailid) {
-        this.mailid = mailid;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -43,7 +34,6 @@ public class Users {
     }
 
     private String phone;
-    private String mailid;
     private String password;
 
     public Users()

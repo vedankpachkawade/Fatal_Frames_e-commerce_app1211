@@ -78,7 +78,7 @@ public class LogIn_Activity extends AppCompatActivity {
     }
 
     private void LoginUser() {
-        String phone = InputNumber.getText().toString();
+        String phone = InputNumber.getText().toString().trim();
         String password = InputPassword.getText().toString();
 
         if (TextUtils.isEmpty(phone)){
