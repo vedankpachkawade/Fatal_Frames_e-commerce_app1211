@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -13,15 +14,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fatalframes.Model.Product;
 import com.example.fatalframes.Prevalent.Prevalent;
 import com.example.fatalframes.ViewHome.ProductViewHolder;
+import com.example.fatalframes.databinding.ProductsItemsLayoutBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -30,6 +35,8 @@ import io.paperdb.Paper;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DatabaseReference ProductsRef;
+    private RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +71,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         View headerView = navigationView.getHeaderView(0);
         TextView userNameTextView = headerView.findViewById(R.id.user_profile_name);
         CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
+
         userNameTextView.setText(Prevalent.currentOnlineUser.getName());
 
+        recyclerView = findViewById(R.id.recycler_menu);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     @Override
@@ -73,20 +85,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onStart();
         FirebaseRecyclerOptions<Product> options = new FirebaseRecyclerOptions.Builder<Product>().setQuery(ProductsRef, Product.class).build();
 
-        FirebaseRecycleAdapter<Products, ProductViewHolder> adapter = new FirebaseRecyclerAdapter<Products, ProductViewHolder>(){
+        FirebaseRecycleAdapter<Products, ProductViewHolder> adapter = new FirebaseRecyclerAdapter<ProductsItemsLayoutBinding, ProductViewHolder>(){
             @Override
             protected void onBindViewHolder(@NonNull ProductViewHolder holder,int position,@NonNull Product){
                 holder.txtProductionName.setText(model.getPname());
                 holder.txtProductDescription.setText(model.getPname());
-                holder.txtProductprice.setText(model.getPname());
+                holder.txtProductprice.setText("Price = "+model.getPname()+"/-");
+                Picasso.get().load(model.getImage()).into(holder.imageView);
             }
             @NonNull
             public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.id.product_items_laout, parent, false);
-                ProductViewHolder holder = new ProductViewHolder(View);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.products_items_layout, parent, false);
+                ProductViewHolder holder = new ProductViewHolder(view);
                 return holder;
             }
-        }
+        };
+
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
     }
 
     public void onBlackPressed(){
@@ -126,14 +142,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         else if (id == R.id.nav_settings)
         {
-
+            Intent intent = new Intent(HomeActivity.this,SettingsActivity.class);
+            startActivity(intent);
         }
         else if (id == R.id.nav_logout)
         {
             Paper.book().destroy();
             android.content.Intent intent = new Intent(HomeActivity.this,MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(Intent);
+            startActivity(intent);
             finish();;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
