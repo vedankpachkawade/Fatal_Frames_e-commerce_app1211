@@ -1,15 +1,12 @@
 package com.example.fatalframes.Model;
 
 public class Users {
-    private String name,phone,password,image,address;
+    private String name;
 
-
-    public Users(String name, String phone, String password, String image, String address) {
+    public Users(String name, String phone, String mailid, String password) {
         this.name = name;
         this.phone = phone;
         this.password = password;
-        this.image = image;
-        this.address = address;
     }
 
     public String getName() {
@@ -36,21 +33,8 @@ public class Users {
         this.password = password;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    private String phone;
+    private String password;
 
     public Users()
     {
