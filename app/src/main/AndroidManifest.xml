@@ -46,7 +46,8 @@
             </intent-filter>
 
         </activity>
-        <!-- Theme is optional and only needed if default theme has no action bar. -->
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
 
     </application>
 

@@ -89,7 +89,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         else if (id == R.id.nav_settings)
         {
-
+            Intent intent = new Intent(HomeActivity.this,SettingsActivity.class);
+            startActivity(intent);
         }
         else if (id == R.id.nav_logout)
         {
@@ -97,7 +98,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             android.content.Intent intent = new Intent(HomeActivity.this,MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(Intent);
-            finish();;
+            finish();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
