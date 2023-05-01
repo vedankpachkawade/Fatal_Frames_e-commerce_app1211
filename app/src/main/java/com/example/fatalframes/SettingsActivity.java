@@ -16,7 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
+
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -60,7 +60,7 @@ public class SettingsActivity extends AppCompatActivity {
                     userInfoSaved();
                 }
                 else{
-                    updateOnlyUserInfo();
+
                 }
             }
         });
@@ -91,7 +91,7 @@ public class SettingsActivity extends AppCompatActivity {
                         String phone = snapshot.child("phone").getValue().toString();
                         String address = snapshot.child("address").getValue().toString();
 
-                        Picasso.get().load(image).into(profileImageView);
+
                         fullNameEditText.setText(name);
                         userPhoneEditText.setText(phone);
                         addressEditText.setText(address);
