@@ -11,24 +11,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.request.target.BitmapThumbnailImageViewTarget;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.fatalframes.Model.Product;
 import com.example.fatalframes.Prevalent.Prevalent;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
@@ -119,7 +115,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     productName.setText(products.getPname());
                     productPrice.setText(products.getPrice());
                     productDescription.setText(products.getDescription());
-                    Picasso.get().load(products.getImage().into(productImage));
+//                    Picasso.get().load(products.getImage().(productImage));
                 }
             }
 
