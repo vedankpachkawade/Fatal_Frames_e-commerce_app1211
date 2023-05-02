@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.squareup.picasso.Picasso;
@@ -46,6 +47,8 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        storageProfilePictureRef = FirebaseStorage.getInstance().getReference().child("Profile pictures");
 
         profileImageView = (CircleImageView) findViewById(R.id.settings_profile_image);
         fullNameEditText = (EditText) findViewById(R.id.Fullname);
@@ -97,7 +100,7 @@ public class SettingsActivity extends AppCompatActivity {
         userMap.put("phoneOrder", userPhoneEditText.getText().toString());
         ref.child(Prevalent.currentOnlineUser.getPhone()).updateChildren(userMap);
 
-        startActivity(new Intent(SettingsActivity.this, MainActivity.class));
+        startActivity(new Intent(SettingsActivity.this, HomeActivity.class));
         Toast.makeText(SettingsActivity.this, "Profile Info Update Successfully.", Toast.LENGTH_SHORT).show();
         finish();
 
@@ -171,7 +174,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 ref.child(Prevalent.currentOnlineUser.getPhone()).updateChildren(userMap);
 
                                 progressDialog.dismiss();
-                                startActivity(new Intent(SettingsActivity.this, MainActivity.class));
+                                startActivity(new Intent(SettingsActivity.this, HomeActivity.class));
                                 Toast.makeText(SettingsActivity.this, "Profile Info Update Successfully.", Toast.LENGTH_SHORT).show();
                                 finish();
                             } else {
