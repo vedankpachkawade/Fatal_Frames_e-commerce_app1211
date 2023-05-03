@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdminCategoryActivity">
-    
+
+
     <TextView
         android:id="@+id/slogan_content"
         android:layout_width="match_parent"
@@ -13,59 +15,112 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="27dp"
+        android:text="Add New Product"
         android:textAlignment="center"
-        android:textSize="26sp"
+        android:textSize="15dp"
         android:textStyle="bold"
-        android:text="Add New Product"/>
+        tools:ignore="TextSizeCheck" />
 
-    <LinearLayout
-        android:id="@+id/linear_category_layout"
+    <ScrollView
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/slogan_content"
-        android:layout_marginTop="3dp"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:contentDescription="@string/app_name">
 
-        <ImageView
-            android:id="@+id/circleframe"
+        <LinearLayout
+            android:id="@+id/linear_category_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/circular" />
-
-        <ImageView
-            android:id="@+id/designer_frame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/designed" />
-
-        <ImageView
-            android:id="@+id/diamond"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/diamond" />
-
-        <ImageView
-            android:id="@+id/doubleframe"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/doubleframe" />
-        <ImageView
-            android:id="@+id/vintageframe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/vintage" />
-        <ImageView
-            android:id="@+id/tripleframe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/trippleframe" />
-        <ImageView
-            android:id="@+id/supportedframe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/supported" />
+            android:layout_below="@+id/slogan_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
 
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/circleframe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/circular" />
+
+            <ImageView
+                android:id="@+id/designer_frame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/designed" />
+
+            <ImageView
+                android:id="@+id/diamond"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/diamond" />
+
+            <ImageView
+                android:id="@+id/doubleframe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/doubleframe" />
+
+            <ImageView
+                android:id="@+id/vintageframe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/vintage" />
+
+            <ImageView
+                android:id="@+id/tripleframe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/trippleframe" />
+
+            <ImageView
+                android:id="@+id/supportedframe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/supported" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/maintain_btn"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_above="@+id/check_orders_btn"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/purple_500"
+        android:text="Maintain Products"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/check_orders_btn"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_above="@+id/admin_logout_btn"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/purple_500"
+        android:text="Check New Orders"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/admin_logout_btn"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="15dp"
+        android:background="@color/purple_500"
+        android:text="Logout"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="20dp" />
 </RelativeLayout>

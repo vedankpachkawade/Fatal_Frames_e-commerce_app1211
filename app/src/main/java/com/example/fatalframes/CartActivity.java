@@ -22,8 +22,11 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -32,7 +35,10 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private Button NextProcessBtn;
-    private TextView txtTotalAmount;
+    private TextView txtTotalAmount, txtmsgl;
+    private int overTotalPrice = 0;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,21 @@ public class CartActivity extends AppCompatActivity {
 
         NextProcessBtn = (Button) findViewById(R.id.next_process_btn);
         txtTotalAmount = (TextView) findViewById(R.id.total_price);
+        txtmsgl = (TextView)findViewById(R.id.msgl);
+
+
+        NextProcessBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                txtTotalAmount.setText("Total Price = ₹"+String.valueOf(overTotalPrice));
+
+                Intent intent = new Intent(CartActivity.this, ConfirmFinalOrderActivity.class);
+                intent.putExtra("Total Price",String.valueOf(overTotalPrice));
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
@@ -53,6 +74,8 @@ public class CartActivity extends AppCompatActivity {
     protected void onStart() {
 
         super.onStart();
+
+        CheckOrderState();
 
         final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
         FirebaseRecyclerOptions<Cart> options = new FirebaseRecyclerOptions.Builder<Cart>().setQuery(cartListRef.child("User View")
@@ -62,9 +85,12 @@ public class CartActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options){
 
             protected  void onBindViewHolder(@NonNull CartViewHolder holder, int position,@NonNull Cart model){
-                holder.txtProductQuantity.setText("Quantity = "+model.getQuality());
+                holder.txtProductQuantity.setText("Quantity = "+model.getQuanity());
                 holder.txtProductPrice.setText("Price = "+model.getPrice()+" ");
                 holder.txtProductName.setText(model.getPname());
+
+                int oneTypeProductPrice = ((Integer.valueOf(model.getPrice())))*Integer.valueOf(model.getQuanity());
+                overTotalPrice = overTotalPrice + oneTypeProductPrice;
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -113,8 +139,49 @@ public class CartActivity extends AppCompatActivity {
                 return holder;
             }
         };
-
         recyclerView.setAdapter(adapter);
         adapter.startListening();
+
+    }
+    private void CheckOrderState(){
+        DatabaseReference orderRef;
+        orderRef = FirebaseDatabase.getInstance().getReference()
+                .child("Orders").child(Prevalent.currentOnlineUser.getPhone());
+
+        orderRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@androidx.annotation.NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    String shippingState = snapshot.child("state").getValue().toString();
+                    String userName = snapshot.child("name").getValue().toString();
+                    
+                    if (shippingState.equals("shipped")){
+                        txtTotalAmount.setText("Dear"+userName+"\n order is shipped successfull");
+                        recyclerView.setVisibility(View.GONE);
+
+                        txtmsgl.setVisibility(View.VISIBLE);
+                        txtmsgl.setText("Congrutalations, your final order ha sbeen placed successfully. Soon you will received your order at your door step");
+                        NextProcessBtn.setVisibility(View.GONE);
+
+                        Toast.makeText(CartActivity.this, "you can purchase more products, once you received your first order", Toast.LENGTH_SHORT).show();
+
+                    } else if (shippingState.equals("not shipped")) {
+                        txtTotalAmount.setText("Shipping State = Not Shipped");
+                        recyclerView.setVisibility(View.GONE);
+
+                        txtmsgl.setVisibility(View.VISIBLE);
+                        NextProcessBtn.setVisibility(View.GONE);
+
+                        Toast.makeText(CartActivity.this, "you can purchase more products, once you received your first order", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@androidx.annotation.NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

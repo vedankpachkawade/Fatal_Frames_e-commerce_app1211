@@ -31,12 +31,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private android.content.Intent Intent;
     private DatabaseReference ProductRef;
     private RecyclerView recyclerView;
+    private String type = "";
     RecyclerView.LayoutManager layoutManager;
 
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        type = getIntent().getExtras().get("Admin").toString();
 
         ProductRef = FirebaseDatabase.getInstance().getReference().child("Products");
 
@@ -109,9 +112,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(HomeActivity.this, CartActivity.class);
             startActivity(intent);
         }
-        else if (id == R.id.nav_orders)
+        else if (id == R.id.nav_search)
         {
-
+            Intent intent = new Intent(HomeActivity.this,SearchProductsActivity.class);
+            startActivity(intent);
         }
         else if (id == R.id.nav_category)
         {

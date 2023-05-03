@@ -2,13 +2,13 @@ package com.example.fatalframes.Model;
 
 public class Cart {
 
-    private String pid,pname, price, quality, discount;
+    private String pid,pname, price, quanity, discount;
 
     public Cart(String pid, String pname, String price, String quality, String discount) {
         this.pid = pid;
         this.pname = pname;
         this.price = price;
-        this.quality = quality;
+        this.quanity = quality;
         this.discount = discount;
     }
 
@@ -36,12 +36,12 @@ public class Cart {
         this.price = price;
     }
 
-    public String getQuality() {
-        return quality;
+    public String getQuanity() {
+        return quanity;
     }
 
-    public void setQuality(String quality) {
-        this.quality = quality;
+    public void setQuanity(String quality) {
+        this.quanity = quality;
     }
 
     public String getDiscount() {
