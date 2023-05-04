@@ -16,19 +16,22 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".ResetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.AdminMaintainProductsActivity"
+            android:exported="false" />
+        <activity
             android:name=".SearchProductsActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminUserProductsActivity"
+            android:name=".Admin.AdminUserProductsActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminNewOrdersActivity"
+            android:name=".Admin.AdminNewOrdersActivity"
             android:exported="false" />
         <activity
             android:name=".ConfirmFinalOrderActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ConfirmFineOrderActivity"
             android:exported="false" />
         <activity
             android:name=".CartActivity"
@@ -36,7 +39,7 @@
         <activity
             android:name=".ProductDetailsActivity"
             android:exported="false" />
-        <activity android:name=".AdminaddnewproductActivity" />
+        <activity android:name=".Admin.AdminaddnewproductActivity" />
         <activity
             android:name=".SettingsActivity"
             android:exported="false" />
@@ -46,7 +49,7 @@
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.FatalFrames.NoActionBar" />
         <activity
-            android:name=".AdminCategoryActivity"
+            android:name=".Admin.AdminCategoryActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"

@@ -1,4 +1,4 @@
-package com.example.fatalframes;
+package com.example.fatalframes.Admin;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fatalframes.Model.Cart;
+import com.example.fatalframes.R;
 import com.example.fatalframes.ViewHome.CartViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;

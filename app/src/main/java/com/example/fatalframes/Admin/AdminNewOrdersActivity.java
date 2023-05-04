@@ -1,4 +1,4 @@
-package com.example.fatalframes;
+package com.example.fatalframes.Admin;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fatalframes.Model.AdminOrders;
+import com.example.fatalframes.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -49,7 +50,7 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
                 new FirebaseRecyclerAdapter<AdminOrders, AdminOrdersViewHolder>(options) {
                     @SuppressLint("SetTextI18n")
                     @Override
-                    protected void onBindViewHolder(@NonNull AdminOrdersViewHolder holder ,int position, @NonNull AdminOrders model) {
+                    protected void onBindViewHolder(@NonNull AdminOrdersViewHolder holder ,int position,  @NonNull AdminOrders model) {
                         holder.userName.setText("Name: "+model.getName());
                         holder.userPhoneNumber.setText("Phone: "+model.getPhone());
                         holder.userTotalPrice.setText("Total Amount= ₹"+model.getTotalAmount());

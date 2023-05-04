@@ -67,7 +67,7 @@
                 app:cbd_strokeColor="@color/black"
                 tools:ignore="TouchTargetSizeCheck" />
             <TextView
-                android:id="@+id/forgot_password"
+                android:id="@+id/forgot_password_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Forget Password?"

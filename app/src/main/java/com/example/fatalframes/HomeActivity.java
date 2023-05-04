@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -15,12 +16,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fatalframes.Admin.AdminaddnewproductActivity;
+import com.example.fatalframes.Model.Product;
 import com.example.fatalframes.Prevalent.Prevalent;
+import com.example.fatalframes.ViewHome.ProductViewHolder;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -39,7 +45,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        type = getIntent().getExtras().get("Admin").toString();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null){
+            type = getIntent().getExtras().get("Admin").toString();
+        }
 
         ProductRef = FirebaseDatabase.getInstance().getReference().child("Products");
 
@@ -53,7 +63,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                if (!type.equals("Admin")){
+                    Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+                    startActivity(intent);
+                }
+
+
             }
         });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -69,8 +84,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         TextView userNameTextView = headerView.findViewById(R.id.user_profile_name);
         CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
 
-        userNameTextView.setText(Prevalent.currentOnlineUser.getName());
-//        Picasso.get().load(Prevalent.currentOnlineUser.getImage().(R.drawable.profile));
+        if (!type.equals("Admin")){
+            userNameTextView.setText(Prevalent.currentOnlineUser.getName());
+            Picasso.get().load(Prevalent.currentOnlineUser.getImage()).placeholder(R.drawable.profile);
+        }
 
         recyclerView = findViewById(R.id.recycler_menu);
         recyclerView.setHasFixedSize(true);
@@ -81,10 +98,54 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
+        FirebaseRecyclerOptions<Product> options =
+                new FirebaseRecyclerOptions.Builder<Product>()
+                        .setQuery(ProductRef, Product.class)
+                        .build();
+        FirebaseRecyclerAdapter<Product, ProductViewHolder> adapter = new FirebaseRecyclerAdapter<Product, ProductViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@androidx.annotation
+                    .NonNull ProductViewHolder holder, int position, @androidx.annotation.NonNull Product model) {
+                holder.txtProductionName.setText(model.getPname());
+                holder.txtProductDescription.setText(model.getDescription());
+                holder.txtProductprice.setText("Price = "+model.getPrice()+"₹");
+
+                Picasso.get().load(model.getImage()).into(holder.imageView);
+
+
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (type.equals("Admin")) {
+                            Intent intent = new Intent(HomeActivity.this, AdminaddnewproductActivity.class);
+                            intent.putExtra("pid",model.getPid());
+                            startActivity(intent);
+
+                        }else {
+                            Intent intent = new Intent(HomeActivity.this,ProductDetailsActivity.class);
+                            intent.putExtra("pid",model.getPid());
+                            startActivity(intent);
+                        }
+
+
+                    }
+                });
+
+            }
+
+            @androidx.annotation.NonNull
+            @Override
+            public ProductViewHolder onCreateViewHolder(@androidx.annotation.NonNull ViewGroup parent, int viewType) {
+               // View view = LayoutInflater.from(parent.getContext()).inflate()
+return null;
+            }
+        };
 
     }
 
-    public void onBlackPressed(){
+    public void onBackPressed(){
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)){
             drawer.closeDrawer(GravityCompat.START);
@@ -100,22 +161,27 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 //        if (id == R.id.action_settings){
 //            return true;
-//        }
-        return super.onOptionsItemSelected(item);
+        return false;
     }
+        //return super.onOptionsItemSelected(item);
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.nav_cart){
+
             Intent intent = new Intent(HomeActivity.this, CartActivity.class);
             startActivity(intent);
         }
         else if (id == R.id.nav_search)
         {
-            Intent intent = new Intent(HomeActivity.this,SearchProductsActivity.class);
-            startActivity(intent);
+            if (!type.equals("Admin")){
+                Intent intent = new Intent(HomeActivity.this,SearchProductsActivity.class);
+                startActivity(intent);
+            }
+
         }
         else if (id == R.id.nav_category)
         {
@@ -123,16 +189,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         else if (id == R.id.nav_settings)
         {
-            Intent intent = new Intent(HomeActivity.this,SettingsActivity.class);
-            startActivity(intent);
+            if (!type.equals("Admin")){
+                Intent intent = new Intent(HomeActivity.this,SettingsActivity.class);
+                startActivity(intent);
+            }
+
         }
         else if (id == R.id.nav_logout)
         {
-            Paper.book().destroy();
-            android.content.Intent intent = new Intent(HomeActivity.this,MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(Intent);
-            finish();
+            if (!type.equals("Admin")){
+                Paper.book().destroy();
+                Intent intent = new Intent(HomeActivity.this,MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(Intent);
+                finish();
+            }
+
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

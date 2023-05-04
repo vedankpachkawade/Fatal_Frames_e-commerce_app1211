@@ -1,4 +1,4 @@
-package com.example.fatalframes;
+package com.example.fatalframes.Admin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.fatalframes.HomeActivity;
+import com.example.fatalframes.MainActivity;
+import com.example.fatalframes.R;
 
 
 public class AdminCategoryActivity extends AppCompatActivity {
@@ -65,7 +69,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
         Circular.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AdminCategoryActivity.this,AdminaddnewproductActivity.class);
+                Intent intent = new Intent(AdminCategoryActivity.this, AdminaddnewproductActivity.class);
                 intent.putExtra("category","Circular");
                 startActivity(intent);
             }

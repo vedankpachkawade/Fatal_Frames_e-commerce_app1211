@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.fatalframes.Admin.AdminCategoryActivity;
 import com.example.fatalframes.Model.Users;
 import com.example.fatalframes.Prevalent.Prevalent;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +29,7 @@ public class LogIn_Activity extends AppCompatActivity {
     private EditText InputNumber,InputPassword;
     private Button LoginButton;
     private ProgressDialog loadingBar;
-    private TextView AdminLink, NotAdminLink;
+    private TextView AdminLink, NotAdminLink, ForgotPasswordLink;
     private String parentDbName = "Users";
     private CheckBox chkBoxRememberMe;
 
@@ -42,6 +43,7 @@ public class LogIn_Activity extends AppCompatActivity {
         InputNumber = (EditText) findViewById(R.id.login_phone_number_input);
         AdminLink = (TextView) findViewById(R.id.admin_panel_link);
         NotAdminLink = (TextView) findViewById(R.id.not_admin_panel_link);
+        ForgotPasswordLink = findViewById(R.id.forgot_password_link);
         loadingBar = new ProgressDialog(this);
 
         chkBoxRememberMe = (CheckBox) findViewById(R.id.remember_me_chkb);
@@ -52,6 +54,15 @@ public class LogIn_Activity extends AppCompatActivity {
             public void onClick(View view) {
 
                 LoginUser();
+            }
+        });
+
+        ForgotPasswordLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LogIn_Activity.this,ResetPasswordActivity.class);
+                intent.putExtra("check","login");
+                startActivity(intent);
             }
         });
              AdminLink.setOnClickListener(new View.OnClickListener() {
